@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on Yilin&#39;s website</title>
+    <link>/categories/r/</link>
+    <description>Recent content in R on Yilin&#39;s website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 23 Jul 2015 21:13:14 -0500</lastBuildDate><atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Residential Front Yard Parking Within Toronto</title>
+      <link>/2015/07/23/residential-front-yard-parking-within-toronto/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>/2015/07/23/residential-front-yard-parking-within-toronto/</guid>
+      <description>Abstact This study obtained the data of Front Yard Parking in Toronto City from Toronto Open Data Portal. After processing the raw data, ggplot2 is used to make a grouping bar chart. It turns out that Toronto has the most Front Yard type parking lots. At the same time, the ratio of 1 licensed space is the highest among 0-4. The result may have something to do with urban planning.</description>
+    </item>
+    
+  </channel>
+</rss>

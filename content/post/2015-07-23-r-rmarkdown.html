@@ -1,0 +1,56 @@
+---
+title: "Residential Front Yard Parking Within Toronto"
+author: "Yilin Wang"
+date: 2015-07-23T21:13:14-05:00
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+
+
+<div id="abstact" class="section level2">
+<h2>Abstact</h2>
+<p>This study obtained the data of Front Yard Parking in Toronto City from Toronto Open Data Portal. After processing the raw data, ggplot2 is used to make a grouping bar chart. It turns out that Toronto has the most Front Yard type parking lots. At the same time, the ratio of 1 licensed space is the highest among 0-4. The result may have something to do with urban planning.</p>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This is a data set about Residential Front Yard Parking in Toronto, Canada. The dataset is downloaded from the Toronto Open Data Portal. Data is updated weekly. While the project is under way, update the data to Under-tapped 21, 2020. This project explores the quantitative characteristics of different parking types and the number of licensed spaces in Toronto. Licensed spaces means the number of parking spots and parking type means type of permit e.g. Front-Yard Parking, Widened Driveway etc.</p>
+<pre class="r"><code>install.packages(&quot;opendatatoronto&quot;)
+## Installing package into &#39;/home/rstudio-user/R/x86_64-pc-linux-gnu-library/4.0&#39;
+## (as &#39;lib&#39; is unspecified)
+library(opendatatoronto)
+resource &lt;- list_package_resources(&quot;https://open.toronto.ca/dataset/residential-front-yard-parking/&quot;)
+data &lt;- get_resource(resource)</code></pre>
+<pre class="r"><code>head(data, 10)
+## # A tibble: 10 x 6
+##     `_id` LICENSED_SPACES PARKING_TYPE STREETNAME STREETNO WARD 
+##     &lt;int&gt;           &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;
+##  1 645385               1 Front Yard   WINEVA AVE 202      19   
+##  2 645386               1 Front Yard   WINEVA AVE 203      19   
+##  3 645387               2 Front Yard   WINEVA AVE 204      19   
+##  4 645388               1 Front Yard   WINEVA AVE 205      19   
+##  5 645389               1 Front Yard   WINEVA AVE 206      19   
+##  6 645390               1 Front Yard   WINEVA AVE 209      19   
+##  7 645391               1 Front Yard   WINEVA AVE 210      19   
+##  8 645392               1 Front Yard   WINEVA AVE 214      19   
+##  9 645393               1 Front Yard   WINEVA AVE 216      19   
+## 10 645394               1 Front Yard   WINEVA AVE 221      19
+data2 &lt;- xtabs(~PARKING_TYPE + LICENSED_SPACES, data = data)
+data3 &lt;- as.data.frame(data2)
+data2
+##                    LICENSED_SPACES
+## PARKING_TYPE            0     1     2     3     4
+##   Boulevard Parking     0   110    49    10     1
+##   Front Yard            2 12695   497     9     2
+##   Widened Driveway      1  3824   258     2     0</code></pre>
+</div>
+<div id="visualization" class="section level2">
+<h2>Visualization</h2>
+<pre class="r"><code>library(ggplot2)
+ggplot(data = data3, mapping = aes(x = PARKING_TYPE, y = Freq, fill = LICENSED_SPACES)) + geom_col(position = &quot;dodge&quot;)</code></pre>
+<p><img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="discussion" class="section level2">
+<h2>Discussion</h2>
+<p>From the plot drawn using ggplot2, I found that parking type mainly has three classes, respectively is Boulevard Paking, Front Yard and Widened Driveway. Licensed spaces have five classes from 0 to 4. For Parking types, the amount of Front Yard has an absolute advantage, while the number of Boulevard Parking is very small. In terms of licensed spaces, 1 space has the largest number followed by 2 Spaces. The proportion of licensed spaces in other quantities is very low. According to the application of permit, space and building planning should be considered in future urban construction to be more suitable for single parking. And fully dig Boulevard and Widened Driveway parking potential. Especially in the official website of the licensing that have no remember of Widened Driveway parking <a href="https://www.toronto.ca/services-payments/streets-parking-transportation/applying-for-a-parking-permit/" class="uri">https://www.toronto.ca/services-payments/streets-parking-transportation/applying-for-a-parking-permit/</a>.</p>
+</div>

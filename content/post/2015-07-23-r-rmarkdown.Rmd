@@ -1,0 +1,43 @@
+---
+title: "Residential Front Yard Parking Within Toronto"
+author: "Yilin Wang"
+date: 2015-07-23T21:13:14-05:00
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+## Abstact
+
+This study obtained the data of Front Yard Parking in Toronto City from Toronto Open Data Portal. After processing the raw data, ggplot2 is used to make a grouping bar chart. It turns out that Toronto has the most Front Yard type parking lots. At the same time, the ratio of 1 licensed space is the highest among 0-4. The result may have something to do with urban planning.
+
+## Introduction
+
+This is a data set about Residential Front Yard Parking in Toronto, Canada. The dataset is downloaded from the Toronto Open Data Portal. Data is updated weekly. While the project is under way, update the data to Under-tapped 21, 2020. This project explores the quantitative characteristics of different parking types and the number of licensed spaces in Toronto. Licensed spaces means the number of parking spots and parking type means type of permit e.g. Front-Yard Parking, Widened Driveway etc.
+
+```{r}
+install.packages("opendatatoronto")
+library(opendatatoronto)
+resource <- list_package_resources("https://open.toronto.ca/dataset/residential-front-yard-parking/")
+data <- get_resource(resource)
+```
+
+```{r}
+head(data, 10)
+data2 <- xtabs(~PARKING_TYPE + LICENSED_SPACES, data = data)
+data3 <- as.data.frame(data2)
+data2
+```
+
+## Visualization
+```{r}
+library(ggplot2)
+ggplot(data = data3, mapping = aes(x = PARKING_TYPE, y = Freq, fill = LICENSED_SPACES)) + geom_col(position = "dodge")
+```
+
+## Discussion
+
+From the plot drawn using ggplot2, I found that parking type mainly has three classes, respectively is Boulevard Paking, Front Yard and Widened Driveway. Licensed spaces have five classes from 0 to 4. For Parking types, the amount of Front Yard has an absolute advantage, while the number of Boulevard Parking is very small. In terms of licensed spaces, 1 space has the largest number followed by 2 Spaces. The proportion of licensed spaces in other quantities is very low. According to the application of permit, space and building planning should be considered in future urban construction to be more suitable for single parking. And fully dig Boulevard and Widened Driveway parking potential. Especially in the official website of the licensing that have no remember of Widened Driveway parking <https://www.toronto.ca/services-payments/streets-parking-transportation/applying-for-a-parking-permit/>.
